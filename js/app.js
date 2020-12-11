@@ -275,3 +275,103 @@
 	//The root of our problem is that we have all of this conditionally rendered logic inside of the render(){}
 		//SOLUTION: create a helper function above render(){}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//Breather and Review
+
+//Benefits of Class Components 	==> Easier code organization
+//								==> Can use 'state'						==> easier user input
+//								==> Understands lifecycle events		==> easier to do things when the app first starts
+
+
+//Rules of Class Components
+	//Must be a JS class
+	//Must extend (subclass) React.Component
+	//Must define a 'render' method that returns some amount of JSX
+		class App extends React.Component{};
+
+//Rules of State
+	//Only usable with class components
+	//You will confuse state w/ props
+	//State is a JS object that contains data relevant to a component
+	//Updating 'state' on a component causes the component to (almost) instantly rerender
+	//State must be initialized when a component is created
+	//State can only be updated using the function 'setState()'
+		/*NEVER DO THIS*/ this.state.lat = 37;
+
+//Component Lifecycle
+	//constructor
+	//render
+		//content visible on screen
+	//componentDidMount
+		//sit and wait for updates...
+	//componentDidUpdate
+		//Sit and wait until this component is not longer shown
+	//componentWillUnmount
+		//We don't have a use for this one quite yet.
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//Coding Exercise 4: Class-Based Components
+	//Code creates a component called UserForm, which is a functional component.
+	//Your goal:
+		//Refactor UserForm to be a classed-based component.  It should return the exact same JSX.
+		//Remember that components must:
+			//1. Be a JS Class
+			//2. Extend React.Component
+			//3. Implement a render method that returns some JSX
+
+	//solution:
+	class UserForm extends React.Component {
+		render(){
+			return (
+				<form>
+					<label>Enter a username:</label>
+					<input/>
+				</form>
+			);
+		};
+	};
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//Coding Exercise 5: Updating Components with State
+//**note: this is a tough problem --> you completed it on the second try
+
+//The Clock class below is trying to implement a clock displya that updates every second.  Right now,
+//a beginner engineer tried putting the component together but they're  finding that they can't get 
+//the time to update!
+
+//Your Goal: 
+	//Update the Clock class so that it properly updates once per second
+		//Hints:
+			//You definitely need to use 'state'. Make sure you initialize the 'state' object.
+			//Remember that you can get your component to update by calling setState
+			//Remember that you only update state by calling setState
+
+	//Solution:
+	class Clock extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = {
+                time: null
+            };
+        }
+        componentDidMount() {
+            setInterval(() => {
+                this.setState({ time: new Date().toLocaleTimeString() })
+            }, 1000)
+        }
+        
+        render() {
+            return (
+                <div className="time">
+                    The time is: {this.state.time}
+                </div>
+            );
+        }
+    }
+
+    //This is perhaps a more elegant solution:
+    this.state = { time: new Date().toLocaleTimeString() }
